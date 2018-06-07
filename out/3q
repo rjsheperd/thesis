@@ -1,0 +1,20 @@
+from matplotlib.pylab import *
+from numpy import outer
+import csv
+
+A = []
+with open('BD_test.csv', 'rb') as csvfile:
+	spamreader = csv.reader(csvfile, delimiter=' ')
+	for row in spamreader:
+		T = []
+		for item in row:
+			if item != '':
+				item = int(item, 10)
+				T.append(float(item))
+		A.append(T)
+
+figure(3)
+imshow(A, interpolation='none')
+imshow(A)
+grid(True)
+show()

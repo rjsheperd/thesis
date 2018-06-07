@@ -1,0 +1,118 @@
+Referee(s)' Comments to Author:
+
+Reviewer: 1
+
+Comments to the Author
+Summary
+
+In this paper, the authors propose a fire spreading simulator based on the famous Richard C. Rothermel model, in two applications: a web-based and a 3D virtual reality applications. The simulation kernel use a GPGPU framework based on CUDA to compute fire behaviour and a web service provides GUI easing user's interaction. The paper is well written and the model is sufficiently described. It would be improved with a section discussing details of software implementation, i.e. it would be wise to provide a section explaining program components. This paper seems suitable for a conference, not for a paper: for a paper the authors should discuss and illustrate further details of software implementation.
+
+Originality
+
+The originality of the paper is limited, it clearly lacks in describing components and technical elements:
+- The literature review lacks in mentioning cellular modelling approach.
+- The paper would be improved with a section discussing details of software implementation (ex. VfireLib library, classes and patterns used in the wrapper, model's program, etc.).
+- As environmental simulation commonly use Object Oriented Programming techniques, it would be wise to provide a section to detail the program components (with UML diagram ?).
+- There is no link for testing the Web service. It would be wise to provide a link to evaluate the work.
+
+Impact
+
+The subject of this paper is not newer, and a lot of works are already done in this area (cf. make a request with keywords: "GPGPU fire propagation modelling"). Thus, the originality of the paper resides in the development of a Web Service architecture. The impact of the paper is limited because it is difficult to estimate if the enhancement proposed is applicable to others CA models out of the proposed one. The authors motive the techniques only by the vFireLib library and CUDA. Simulations are limited to fire spreading from a point of origin and results are fire shape in a given time period.
+
+The authors must discuss and illustrate further details of software implementation, for a larger audience.
+
+
+Reviewer: 2
+
+Comments to the Author
+This paper presents a wildfire spread simulation and visualization tool supporting different operational modalities: Pure CPU-based simulation; CUDA-based GPGPU accelerated simulation; Web-based simulation and visualization; and 3D immersive visualization (Virtual Reality). The submitted manuscript is easy readable and informative as an implementation and evaluation report. Although this tool seems useful in practice, there is a substantial lack of fundamental information which makes difficult to evaluate the innovativeness and relevance of this work to accept as a journal paper.
+
+The CUDA-based parallel implementations of the fire propagation algorithms being faster than the sequential counterparts seem as an obvious result. Regarding the “speedup” of the parallel implementation, it was difficult to understand the relation between the value explained in the Summary (“20x”) and in the Conclusion (“ranging from 64x to 229x speedup”). Although these results seem impressive, the most important thing is to understand the theoretical computational and communication costs and the achieved efficiency on both CPU and GPU implementations. It is also important to clarify the problem statement (For instance: targeted maximum grid size (simulation), targeted maximum response time (web-based service), targeted FPS (visualization), etc.), since it is difficult to evaluate the Timings (Section 5.2) without knowing the target parameters.
+
+In addition to the aforementioned things, I would like to have the following items be clarified:
+
+a)(Section 3) It is said that the multi-threading capabilities of the CPU is not used for the evaluation purposes. However, for the potential users, it seems important to present the algorithmic efficiency (of the CPU-based implementation) when using multi-threading on a pure-CPU based system.
+
+b)(Section 4) The parallel implementation seems to be applied only on a single GPU system, and there is no information about the multi-GPU capabilities. To offer this simulation as a “service”, this multi-GPU functionality seems an important item considering that modern “servers” are usually more powerful than usual desktop or mobile PCs.
+
+c)(Section 4.4) It is said that the number of blocks and threads were determined experimentally (I assume that it was using the “trial and error” approach). However, it will be useful if there is a theoretical discussion considering the target data size and the hardware system (based on number of cores and memory size, for instance).
+
+d)(Section 5.1) The reference [23] shows a multi-GPU based platform but the hardware resource utilized in the evaluation seems to be achievable by using a simple desktop PC. In addition, I could not find the hardware configuration (for the server) for providing the “Web-based service” (Section 7).
+
+e)(Section 5.4) Probably this is one of the most important part of this work since it can show how useful is the proposed tool for a real world application. However, one paragraph is too short to understand the real usage scenario (grid size, number of interactions, etc.).
+
+f)(Section 7) Although the explanation of the user interface is valuable, it would be more helpful to the potential users to know more about the technical details of the client-server architecture (as a fire spread simulation service provider), such as the multi-user connection capabilities, authentication methods, etc.
+
+g)(Section 8) A comparison between the reference [15] (CAVE system) would be valuable from the point of view of the user perception and visual exploration.
+
+
+Reviewer: 3
+
+Comments to the Author
+The article is of potential interest to the audience of CCPE journal. However, in its current form it is affected by several issues and should be revised and improved. Below are some detailed comments.
+
+Beginning of section 2: 1) it seems to me that the Rothermel’s fire model only gives as output the head fire rate of spread, but does not provide any information about the spread in different directions. Instead, the two-dimensional description of the spread under homogeneous conditions (i.e., spatially and temporally constant fuels, wind, and topography), in terms of a two-dimensional shape was proposed by [Alexander 1985; Van Wagner 1969] (ellipse),  [Anderson 1983] (double ellipses), [Peet 1967] ovoids and others. Nowadays, the most common model of fire shape is the simple ellipse because it fits observed fires with the same approximation of other shapes [see Green et al. 1983] and also provides more convenient mathematics for the computation of the fire growth [Catchpole et al. 1992]. 2) The given definition of fuel model is very imprecise. Cells have nothing to do with the fuel model and vice versa. In fact, the well-known FARSITE simulator, which is based on a non-raster propagation algorithm, also uses the fuel models (and there are no cells). I would ask the authors to provide accurate information to the reader regarding this point. The fact is that the Rothermel’s fire model describes the fire behaviour at a point, under hypothetical homogeneous conditions. Then, the introduction of cells (together with the elliptical assumption) is part of one of the (several) algorithms for automating the fire propagation.
+
+Page 5: FARSITE is suddenly mentioned without explaining to the reader what it is and what is the difference between FARSITE and vFire. In addition, there must be specified which type of precision (model error, propagation error?). I suggest avoiding mentioning FARSITE is the authors do not intend to explain the whole story here (because they think it is not relevant to the article).
+
+Sentence: “vFire was based on hFire”. Please provide a reference for hFire or eliminate it.
+
+About ref. [18], it is stated that “Their work will be covered in more detail further in the …paper”. However, I could not find such a detailed discussion on ref [18] in the paper.
+
+Page 6. Sentence: “There are several potential approaches to calculating the propagation of fire in a wildfire environment”. Perhaps, this is exactly the type of information that should be discussed in detail more or less at the beginning of the section instated than at its end (in fact, some of the methods were already mentioned in a confused way).
+
+I suggest improving the logical flow of Section 2.
+
+Section 3. Sequential Implementation. In practice, this section refers the reader to [22] and [1] for the relevant details on the sequential algorithm. Unfortunately, at the beginning of section 4.1 it is stated that “the parallel implementation of the MT kernel is very similar to the sequential version”. At this point, the reader gets a bit confused because of the lack of information on the used algorithms (it is not enough to refer the reader to external sources). Equations are not important here, but the outline of the used/parallelized algorithms (including the used data structures) is essential for understanding. Therefore, please provide in the manuscript the pseudo-codes as done in [22]. If the manuscript gets too long, please consider an overall rebalancing of all the components (introduction, background, figures, and so on).
+
+It is not clear if the authors used two copies of the raster during the simulation. However, this is related with the issued mentioned above. In general, the article should enable the reader to implement the CUDA version of MT, IMT and BD. Also, to be published in CCPE journal, the article should provide clear, interesting and original contributions on the topics relevant to the journal. Therefore, please provide, in a clear way, any relevant implementation detail (except equations, for which the reader can be referred to the proper sources), particularly stressing and motivating those relevant to the GPU architecture.
+
+Section 4.4: these results are hardware dependent. However, the used hardware is specified later, in section 5.1. Please, consider moving considerations on block sizes after section 5.1 to allow the reader to better appreciate the provided information.
+
+Figure 4: please provide more professional graphs. Text is too small in many points.
+
+The computational study of the parallel implementation (two pages) is too succinct.
+
+Even if the obtained results could not be compared with those of reference [18] (i.e. GPU version of fireLib), the authors should at least mention the speedup achieved in [18] and briefly discuss the differences and similarities.
+
+Section 6. WEB SERVICE ARCHITECTURE. Section 7. WEB-BASED VISUALIZATION APPLICATION. Section 8. 3D VISUALIZATION.  I'm afraid that these sections are too long compared with the space dedicated to the description and numerical investigation of the parallel implementation. Considering the audience of this journal. In my opinion, this part of the manuscript should be significantly reduced and the “parallel” part expanded.
+
+
+References
+- ALEXANDER, M. 1985. Estimating the length-to-breadth ratio of elliptical forest fire patterns. In Proceedings of the 8th Conference Fire and Forest Meteorology. 287–304.
+- ANDERSON, H. 1983. Predicting wind-driven wildland fire size and shape. Tech. rep. INT-305, USDA, Forest Service.
+- CATCHPOLE, E., ALEXANDER, M., AND GILL, A. 1992. Elliptical-fire perimeter- and area-intensity distributions. Canad. J. Forest Res. 22, 968–972.
+- GREEN, D. G. 1983. Shapes of simulated fires in discrete fuels. Ecolog. Model. 20, 1, 21–32.
+PEET, G. 1967. The shape of mild fires in Jarrah forest. Australian Forestry 31, 121–127.
+- VAN WAGNER, C. 1969. A simple fire growth model. Forestry Chron. 45, 103–104.
+
+Reviewer: 4
+
+Comments to the Author
+This paper claims the ability of executing forest fire simulations faster than the state of the art forest fire simulators thanks to the use of GPUs as a computing elements. The basic idea is focused on parallelizing the fire front propagation using a cell automata approach because it can be easily matched into GPUs executing platforms. The evaluation of the rate of spread and all initialization stuff are executed in a serial fashion on CPUs.  Three different fire front propagation strategies are tested: Minimal time, Iterative Minimal time and Burn Distances. These three propagation schemes are based on a cell automaton scheme. Despite the quality results differences among the three strategies, the speed up results obtained are quite relevant. The benefits obtained using these parallel schemes is claimed as the first step to an operational forest fire simulator system that could be useful as fire fighters during and ongoing hazard.  However, to have access to GPU executing platforms is not a common issue on forest fire fighting centers, for that reason, the authors also introduce in this paper a serve-client architecture that could offers forest fire simulations as a service, that way, the executing platform where the simulations  are running could be decoupled from the firefighting facilities.
+Although the main ideas described in this paper are quite interesting there are several weak points that should be clarified or improved to be published.
+
+The availability of executing faster their simulations is not only due to the use of GPUs but for the simplicity of the forest fire environment they are using. In particular, the experiments done are using a flat terrain without wind, which are the basic synthetic case where the computing requirements are not the bottleneck. There have been other parallelization efforts related to forest fire simulators that deeply analyze the influence of the topography and wind into the forest fires simulation execution time that are not mentioned in the paper.
+
+Tomàs Artés, Andrés Cencerrado, Ana Cortés & Tomàs Margalef, “Real-time genetic spatial optimization to improve forest fire spread forecasting in high-performance computing environments”, INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE, 2016
+VOL. 30, NO. 3, 594–611
+
+
+In fact, the quality of the results is directly affected by these two aspects and they are not analyzed in this work. Moreover, when defining the improvements in running time the authors used bare sentences such as the one in section 3 “…10% of the run time of the entire algorithm in small cases and less than 2% in the large cases.”, what does it means “small” and “large” in terms of wildfires dimensions?.
+I recommend to eliminate from the abstract the sentence “Our fire simulation application  is that tool” is to excessive because, right now there are other simulation tools that are used in operational and the one presented in this paper is not.  For example:
+
+S. Monedero, J. Ramirez , D. Molina-Terren, A. Cardil, “Simulating wildfires backwards in time from the final fire perimeter in point-functional fire models”. Environmental Modelling & Software 92 (2017) 163-168.
+
+Furthermore, in Section 2, some relevant models in forest fire spread are omitted such as:
+
+Doming Xavier Viegas, “ A Mathematical Model forest forest fire blowup”, Combustion Science and Technology, 177: 27^51, 2005.
+ So, I recommend to improve the related work because some important works are not included.
+
+Finally, there are several typos that should be corrected:
+Page 2: “Another application domain fore forest fire is the training of fire fighters” change to “Another application domain fore forest fire simulators is the training of fire fighters”.
+Page 4: after equation (1) there should be not indentation.
+Page 5:” This far exceeds the number of instructions a cpu would be capable of …” change to ” This far exceeds the number of instructions a CPU would be capable of …”.
+Page 11 : “The end time of the simulation…” should be “ The execution time of the simulation…”
+Figure 4(a) is difficult to read, it should be improved.
+Reference [10] has an error in the publication title.
+
